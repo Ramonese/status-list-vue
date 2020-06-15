@@ -1,7 +1,9 @@
 <template>
-  <aside class="status">
-    <button @click="openStatusList" class="status--button">{{ status }}</button>
-    <form @submit="getStatus" class="status-list">
+  <aside class="c-status">
+    <button @click="openStatusList" class="status--button" ref="statusLabel">
+      {{ status }}
+    </button>
+    <form @keyup.enter="getStatus" class="status-list">
       <fieldset>
         <legend class="sr-only">Change status</legend>
         <div class="status-list--item">
@@ -12,7 +14,7 @@
             v-model="status"
             name="status"
           />
-          <label for="1">Waiting</label>
+          <label for="1" class="status-label">Waiting</label>
         </div>
         <div class="status-list--item">
           <input
@@ -22,7 +24,7 @@
             value="test"
             v-model="status"
           />
-          <label for="2">Test</label>
+          <label for="2" class="status-label">Test</label>
         </div>
         <div class="status-list--item">
           <input
@@ -32,25 +34,10 @@
             v-model="status"
             value="ready"
           />
-          <label for="3">Ready</label>
+          <label for="3" class="status-label">Ready</label>
         </div>
       </fieldset>
     </form>
-    <!-- <div>
-      <input
-        type="radio"
-        value="One"
-        :checked="picked == 'One'"
-        @change="e => (picked = e.target.value)"
-      />
-      <input
-        type="radio"
-        value="Two"
-        :checked="picked == 'Two'"
-        @change="e => (picked = e.target.value)"
-      />
-      <span>Picked: {{ picked }}</span>
-    </div> -->
   </aside>
 </template>
 
@@ -59,19 +46,22 @@ export default {
   name: "StatusItem",
   data() {
     return {
-      status: this.currentStatus
+      status: this.currentStatus,
       //picked: ""
     };
   },
   props: {
-    currentStatus: String
+    currentStatus: String,
   },
   methods: {
-    openStatusList() {},
+    openStatusList() {
+      alert("click");
+    },
     getStatus() {
-      console.log(this.status);
-    }
-  }
+      this.$refs.statusLabel.style.setProperty("--label-background", "red");
+      console.log(this.status, this.$refs.statusLabel);
+    },
+  },
 };
 </script>
 
@@ -90,5 +80,42 @@ li {
 }
 a {
   color: #42b983;
+}
+fieldset {
+  border: none;
+}
+.c-status {
+  max-width: max-content;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+.status-list {
+  padding: 16px;
+  background: var(--white);
+  box-shadow: 0px 8px 32px rgba(31, 34, 38, 0.12),
+    0px 2px 6px rgba(31, 34, 38, 0.08);
+}
+.status--button {
+  padding: 2px 8px;
+  -webkit-appearance: button;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--white);
+  background: var(--label-background);
+}
+.status--button:focus {
+  outline: 2px solid black;
+}
+.status-label {
+  display: inline-block;
+  padding: 8px;
+}
+.status-list--item:hover {
+  background-color: var(--hover-color);
+}
+.status-list--item:active {
+  background-color: var(--focus-color);
 }
 </style>

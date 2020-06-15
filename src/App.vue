@@ -10,18 +10,39 @@ import StatusItem from "./components/StatusItem.vue";
 export default {
   name: "App",
   components: {
-    StatusItem
-  }
+    StatusItem,
+  },
 };
 </script>
 
 <style>
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("./assets/font/Inter-Medium.woff") format("woff");
+}
+/* @font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("Inter-SemiBold.woff2?v=3.12") format("woff2"),
+    url("Inter-SemiBold.woff?v=3.12") format("woff");
+} */
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Inter, Helvetica, Arial, sans-serif;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  font-size: 12px;
+  line-height: 16px;
+}
+:root {
+  --white: #fff;
+  --blue: #47c1bf;
+  --label-background: #47c1bf;
+  --hover-color: #f7f9fd;
+  --focus-color: red;
 }
 </style>
