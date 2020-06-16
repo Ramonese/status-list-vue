@@ -5,13 +5,39 @@
 </template>
 
 <script>
+import axios from "axios";
 import StatusItem from "./components/StatusItem.vue";
-
+// Make a request for a user with a given ID
+const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+const params = {
+  company_account_id: "apiplayground",
+  apiKey: "ScoroAPI_8cacfb14f41d342",
+  lang: "eng",
+  filter: {
+    module: ["projects", "tasks"]
+  }
+};
+axios
+  .post(
+    CORS_PROXY + "https://homeassignment.scoro.com/api/v2/statuses/list",
+    params
+  )
+  .then(function(response) {
+    // handle success
+    console.log(response.data);
+  })
+  .catch(function(error) {
+    // handle error
+    console.log(error);
+  })
+  .then(function() {
+    // always executed
+  });
 export default {
   name: "App",
   components: {
-    StatusItem,
-  },
+    StatusItem
+  }
 };
 </script>
 

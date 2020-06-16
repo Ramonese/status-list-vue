@@ -89,6 +89,7 @@ fieldset {
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
+  align-items: baseline;
 }
 .status-list {
   padding: 16px;
