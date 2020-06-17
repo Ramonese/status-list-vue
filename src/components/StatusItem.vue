@@ -1,40 +1,33 @@
 <template>
   <aside class="c-status">
-    <button @click="openStatusList" class="status--button" ref="statusLabel">
-      {{ status }}
+    <button
+      @click="openStatusList"
+      class="status--button"
+      ref="statusLabel"
+      :style="{ background: statusSelected.color }"
+    >
+      {{ statusSelected }}
     </button>
     <form @keyup.enter="getStatus" class="status-list">
       <fieldset>
         <legend class="sr-only">Change status</legend>
-        <div class="status-list--item">
+        <div
+          class="status-list--item"
+          v-for="status in data"
+          :key="status.status_id + status.status_name"
+          :style="{ background: status.color }"
+        >
           <input
             type="radio"
-            value="waiting"
-            id="1"
-            v-model="status"
+            :value="status.status_name"
+            :id="status.status_id"
             name="status"
+            :color="status.color"
+            v-on:change="changeStatus"
           />
-          <label for="1" class="status-label">Waiting</label>
-        </div>
-        <div class="status-list--item">
-          <input
-            type="radio"
-            id="2"
-            name="status"
-            value="test"
-            v-model="status"
-          />
-          <label for="2" class="status-label">Test</label>
-        </div>
-        <div class="status-list--item">
-          <input
-            type="radio"
-            id="3"
-            name="status"
-            v-model="status"
-            value="ready"
-          />
-          <label for="3" class="status-label">Ready</label>
+          <label :for="status.status_id" class="status-label">{{
+            status.status_name
+          }}</label>
         </div>
       </fieldset>
     </form>
@@ -46,12 +39,15 @@ export default {
   name: "StatusItem",
   data() {
     return {
-      status: this.currentStatus,
-      //picked: ""
+      statusDefault: this.currentStatus,
+      statusSelected: "",
+      statusColor: null,
+      selected: null
     };
   },
   props: {
     currentStatus: String,
+    data: Array
   },
   methods: {
     openStatusList() {
@@ -61,7 +57,11 @@ export default {
       this.$refs.statusLabel.style.setProperty("--label-background", "red");
       console.log(this.status, this.$refs.statusLabel);
     },
-  },
+    changeStatus($event) {
+      this.statusSelected = $event.target.value;
+      this.statusColor = $event.target.tagName;
+    }
+  }
 };
 </script>
 

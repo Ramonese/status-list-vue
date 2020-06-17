@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <v-if error>
-      <p class="notification">{{ error }}</p>
-    </v-if>
-    <StatusItem currentStatus="test" />
+    <aside v-if="error" class="notification">
+      <p>{{ error }}</p>
+    </aside>
+
+    <StatusItem currentStatus="Completed" :data="statusData" />
     {{ statusData }}
   </div>
 </template>
@@ -11,8 +12,8 @@
 <script>
 import axios from "axios";
 import StatusItem from "./components/StatusItem.vue";
-// Make a request for a user with a given ID
-const CORS_PROXY = "https://cors-anywhere.herokuapp.com";
+//Cors server for development version of the app
+const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 const apiUrl = "https://homeassignment.scoro.com/api/v2/statuses/list";
 const params = {
   company_account_id: "apiplayground",
@@ -35,7 +36,6 @@ export default {
     };
   },
   created() {
-    console.log(this.statusData);
     axios
       .post(CORS_PROXY + apiUrl, params)
       .then(response => (this.statusData = response.data.data))
