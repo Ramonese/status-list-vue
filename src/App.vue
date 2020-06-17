@@ -1,6 +1,10 @@
 <template>
   <div id="app">
+    <v-if error>
+      <p class="notification">{{ error }}</p>
+    </v-if>
     <StatusItem currentStatus="test" />
+    {{ statusData }}
   </div>
 </template>
 
@@ -8,7 +12,8 @@
 import axios from "axios";
 import StatusItem from "./components/StatusItem.vue";
 // Make a request for a user with a given ID
-const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
+const CORS_PROXY = "https://cors-anywhere.herokuapp.com";
+const apiUrl = "https://homeassignment.scoro.com/api/v2/statuses/list";
 const params = {
   company_account_id: "apiplayground",
   apiKey: "ScoroAPI_8cacfb14f41d342",
@@ -17,26 +22,30 @@ const params = {
     module: ["projects", "tasks"]
   }
 };
-axios
-  .post(
-    CORS_PROXY + "https://homeassignment.scoro.com/api/v2/statuses/list",
-    params
-  )
-  .then(function(response) {
-    // handle success
-    console.log(response.data);
-  })
-  .catch(function(error) {
-    // handle error
-    console.log(error);
-  })
-  .then(function() {
-    // always executed
-  });
+
 export default {
   name: "App",
   components: {
     StatusItem
+  },
+  data() {
+    return {
+      statusData: null,
+      error: null
+    };
+  },
+  created() {
+    console.log(this.statusData);
+    axios
+      .post(CORS_PROXY + apiUrl, params)
+      .then(response => (this.statusData = response.data.data))
+      .catch(error => {
+        this.error = "Please, try again " + error;
+        console.log(error);
+      })
+      .then(function() {
+        // always executed
+      });
   }
 };
 </script>
@@ -59,7 +68,6 @@ export default {
 } */
 #app {
   font-family: Inter, Helvetica, Arial, sans-serif;
-  text-align: center;
   color: #2c3e50;
   font-size: 12px;
   line-height: 16px;
