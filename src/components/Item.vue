@@ -1,34 +1,22 @@
 <template>
-  <aside class="c-status">
-    <button
-      @click="openStatusList"
-      class="status--button"
-      ref="statusLabel"
-      :style="{ background: statusColor }"
-    >
-      {{ statusSelected }}
-    </button>
-    <form @keyup.enter="getStatus" class="status-list">
-      <fieldset>
-        <legend class="sr-only">Change status</legend>
-        <Item
-          class="status-list--item"
-          v-for="status in data"
-          :status="status"
-          :key="status.status_id + status.status_name"
-          :style="{ background: status.color }"
-          @updateLabel="updateLabel"
-        />
-      </fieldset>
-    </form>
-  </aside>
+  <div>
+    <input
+      type="radio"
+      :value="status.status_name"
+      :id="status.status_id"
+      name="status"
+      :color="status.color"
+      @change="changeStatus"
+    />
+    <label :for="status.status_id" class="status-label">{{
+      status.status_name
+    }}</label>
+  </div>
 </template>
 
 <script>
-import Item from "../components/Item.vue";
 export default {
-  name: "StatusItem",
-  components: { Item },
+  name: "Item",
   data() {
     return {
       statusDefault: this.currentStatus,
@@ -38,8 +26,7 @@ export default {
     };
   },
   props: {
-    currentStatus: String,
-    data: Array
+    status: Object
   },
   methods: {
     openStatusList() {
@@ -49,9 +36,13 @@ export default {
       this.$refs.statusLabel.style.setProperty("--label-background", "red");
       console.log(this.status, this.$refs.statusLabel);
     },
-    updateLabel(label) {
-      this.statusColor = label.color;
-      this.statusSelected = label.name;
+    changeStatus($event) {
+      const label = {
+        name: $event.target.value,
+        color: this.status.color
+      };
+      console.log("click status", label);
+      this.$emit("updateLabel", label);
     }
   }
 };
