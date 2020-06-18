@@ -3,8 +3,23 @@
     <aside v-if="error" class="notification">
       <p>{{ error }}</p>
     </aside>
+    <section>
+      <ul class="task-list">
+        <li class="task-list--item">
+          Task 1 name
+          <StatusItem currentStatus="Completed" :data="statusData" />
+        </li>
+        <li class="task-list--item">
+          <p>Task 2 name Task 2 name</p>
+          <StatusItem currentStatus="Completed" :data="statusData" />
+        </li>
+        <li class="task-list--item">
+          <p>Project 3 name</p>
+          <StatusItem currentStatus="Completed" :data="statusData" />
+        </li>
+      </ul>
+    </section>
 
-    <StatusItem currentStatus="Completed" :data="statusData" />
     {{ statusData }}
   </div>
 </template>
@@ -78,5 +93,16 @@ export default {
   --label-background: #47c1bf;
   --hover-color: #f7f9fd;
   --focus-color: red;
+}
+.task-list {
+  list-style: none;
+  display: grid;
+  width: max-content;
+  grid-template-columns: 1fr;
+}
+.task-list--item {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  grid-gap: 3em 10px;
 }
 </style>

@@ -2,9 +2,9 @@
   <div>
     <input
       type="radio"
+      name="status"
       :value="status.status_name"
       :id="status.status_id"
-      name="status"
       :color="status.color"
       @change="changeStatus"
     />
@@ -17,14 +17,14 @@
 <script>
 export default {
   name: "Item",
-  data() {
-    return {
-      statusDefault: this.currentStatus,
-      statusSelected: "",
-      statusColor: null,
-      selected: null
-    };
-  },
+  // data() {
+  //   return {
+  //     statusDefault: this.currentStatus,
+  //     statusSelected: "",
+  //     statusColor: null,
+  //     selected: null
+  //   };
+  // },
   props: {
     status: Object
   },

@@ -3,24 +3,26 @@
     <button
       @click="openStatusList"
       class="status--button"
-      ref="statusLabel"
       :style="{ background: statusColor }"
+      ref="statusLabel"
     >
-      {{ statusSelected }}
+      test{{ statusSelected }}
     </button>
-    <form @keyup.enter="getStatus" class="status-list">
-      <fieldset>
-        <legend class="sr-only">Change status</legend>
-        <Item
-          class="status-list--item"
-          v-for="status in data"
-          :status="status"
-          :key="status.status_id + status.status_name"
-          :style="{ background: status.color }"
-          @updateLabel="updateLabel"
-        />
-      </fieldset>
-    </form>
+    <transition name="fade">
+      <form @keyup.enter="getStatus" class="status-list" v-if="showPicker">
+        <fieldset>
+          <legend class="sr-only">Change status</legend>
+          <Item
+            class="status-list--item"
+            v-for="status in data"
+            :status="status"
+            :key="status.status_id + status.status_name"
+            :style="{ background: status.color }"
+            @updateLabel="updateLabel"
+          />
+        </fieldset>
+      </form>
+    </transition>
   </aside>
 </template>
 
@@ -34,7 +36,8 @@ export default {
       statusDefault: this.currentStatus,
       statusSelected: "",
       statusColor: null,
-      selected: null
+      selected: null,
+      showPicker: false
     };
   },
   props: {
@@ -43,7 +46,7 @@ export default {
   },
   methods: {
     openStatusList() {
-      alert("click");
+      this.showPicker = true;
     },
     getStatus() {
       this.$refs.statusLabel.style.setProperty("--label-background", "red");
@@ -57,11 +60,7 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
 ul {
   list-style-type: none;
   padding: 0;
@@ -70,9 +69,7 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
-a {
-  color: #42b983;
-}
+
 fieldset {
   border: none;
 }
@@ -110,5 +107,13 @@ fieldset {
 }
 .status-list--item:active {
   background-color: var(--focus-color);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
