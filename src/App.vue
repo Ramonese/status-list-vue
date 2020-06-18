@@ -93,6 +93,7 @@ export default {
   --label-background: #47c1bf;
   --hover-color: #f7f9fd;
   --focus-color: red;
+  --border-radius: 4px;
 }
 .task-list {
   list-style: none;

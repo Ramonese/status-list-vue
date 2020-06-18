@@ -55,12 +55,13 @@ export default {
     updateLabel(label) {
       this.statusColor = label.color;
       this.statusSelected = label.name;
+      this.showPicker = false;
     }
   }
 };
 </script>
 
-<style scoped>
+<style >
 ul {
   list-style-type: none;
   padding: 0;
@@ -74,6 +75,7 @@ fieldset {
   border: none;
 }
 .c-status {
+  position: relative;
   max-width: max-content;
   display: flex;
   flex: 1 1 auto;
@@ -81,16 +83,22 @@ fieldset {
   align-items: baseline;
 }
 .status-list {
+  position: absolute;
+  top: 0;
+  left: 0;
   padding: 16px;
   background: var(--white);
+  border-radius: var(--border-radius);
   box-shadow: 0px 8px 32px rgba(31, 34, 38, 0.12),
     0px 2px 6px rgba(31, 34, 38, 0.08);
+  z-index: 1;
 }
 .status--button {
+  position: relative;
   padding: 2px 8px;
   -webkit-appearance: button;
   border: 0;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   cursor: pointer;
   color: var(--white);
   background: var(--label-background);
@@ -101,6 +109,7 @@ fieldset {
 .status-label {
   display: inline-block;
   padding: 8px;
+  white-space: nowrap;
 }
 .status-list--item:hover {
   background-color: var(--hover-color);
@@ -111,7 +120,7 @@ fieldset {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.3s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
