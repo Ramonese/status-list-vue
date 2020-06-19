@@ -105,5 +105,6 @@ export default {
   display: grid;
   grid-template-columns: max-content 1fr;
   grid-gap: 3em 10px;
+  align-items: center;
 }
 </style>

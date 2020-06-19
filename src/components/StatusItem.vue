@@ -1,32 +1,35 @@
 <template>
   <aside class="c-status">
     <button
-      @click="openStatusList"
       class="status--button"
       :style="{ background: statusColor }"
+      @click.stop="openStatusList"
       ref="statusLabel"
     >
       test{{ statusSelected }}
     </button>
     <transition name="fade">
-      <form @keyup.enter="getStatus" class="status-list" v-if="showPicker">
-        <fieldset>
-          <legend class="sr-only">Change status</legend>
-          <Item
-            class="status-list--item"
-            v-for="status in data"
-            :status="status"
-            :key="status.status_id + status.status_name"
-            :style="{ background: status.color }"
-            @updateLabel="updateLabel"
-          />
-        </fieldset>
-      </form>
+      <div v-show="showPicker">
+        <form class="status-list" v-click-outside="onClickOutside">
+          <fieldset>
+            <legend class="sr-only">Change status</legend>
+            <Item
+              class="status-list--item"
+              v-for="status in data"
+              :status="status"
+              :key="status.status_id + status.status_name"
+              :style="{ background: status.color }"
+              @updateLabel="updateLabel"
+            />
+          </fieldset>
+        </form>
+      </div>
     </transition>
   </aside>
 </template>
 
 <script>
+import vClickOutside from "v-click-outside";
 import Item from "../components/Item.vue";
 export default {
   name: "StatusItem",
@@ -40,6 +43,9 @@ export default {
       showPicker: false
     };
   },
+  directives: {
+    clickOutside: vClickOutside.directive
+  },
   props: {
     currentStatus: String,
     data: Array
@@ -48,10 +54,15 @@ export default {
     openStatusList() {
       this.showPicker = true;
     },
-    getStatus() {
-      this.$refs.statusLabel.style.setProperty("--label-background", "red");
-      console.log(this.status, this.$refs.statusLabel);
+    onClickOutside(event) {
+      console.log("Clicked outside. Event: ", event);
+      console.log("Element clicked on:", event.target);
+      this.showPicker = false;
     },
+    // getStatus() {
+    //   this.$refs.statusLabel.style.setProperty("--label-background", "red");
+    //   console.log(this.status, this.$refs.statusLabel);
+    // },
     updateLabel(label) {
       this.statusColor = label.color;
       this.statusSelected = label.name;
@@ -61,14 +72,10 @@ export default {
 };
 </script>
 
-<style >
+<style>
 ul {
   list-style-type: none;
   padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
 }
 
 fieldset {
