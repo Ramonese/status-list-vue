@@ -19,7 +19,19 @@
         </li>
       </ul>
     </section>
-
+    <!-- <div v-for="status in statusData" :key="status.status_id">
+      <input
+        type="radio"
+        name="status"
+        :value="status.status_name"
+        :id="status.status_id"
+        :color="status.color"
+        @change="changeStatus"
+      />
+      <label :for="status.status_id" class="status-label">{{
+        status.status_name
+      }}</label>
+    </div> -->
     {{ statusData }}
   </div>
 </template>
@@ -57,9 +69,6 @@ export default {
       .catch(error => {
         this.error = "Please, try again " + error;
         console.log(error);
-      })
-      .then(function() {
-        // always executed
       });
   }
 };

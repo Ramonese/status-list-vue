@@ -9,7 +9,7 @@
       test{{ statusSelected }}
     </button>
     <transition name="fade">
-      <div v-show="showPicker">
+      <div v-if="showPicker">
         <form class="status-list" v-click-outside="onClickOutside">
           <fieldset>
             <legend class="sr-only">Change status</legend>
@@ -40,7 +40,7 @@ export default {
       statusSelected: "",
       statusColor: null,
       selected: null,
-      showPicker: false
+      showPicker: true
     };
   },
   directives: {
@@ -91,8 +91,6 @@ fieldset {
 }
 .status-list {
   position: absolute;
-  top: 0;
-  left: 0;
   padding: 16px;
   background: var(--white);
   border-radius: var(--border-radius);
@@ -110,9 +108,7 @@ fieldset {
   color: var(--white);
   background: var(--label-background);
 }
-.status--button:focus {
-  outline: 2px solid black;
-}
+
 .status-label {
   display: inline-block;
   padding: 8px;

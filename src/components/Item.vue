@@ -4,8 +4,8 @@
       type="radio"
       name="status"
       :value="status.status_name"
-      :id="status.status_id"
-      :color="status.color"
+      :id="status.status_id + status.status_name"
+      :style="{ color: status.color }"
       @change="changeStatus"
     />
     <label :for="status.status_id" class="status-label">{{
@@ -17,14 +17,6 @@
 <script>
 export default {
   name: "Item",
-  // data() {
-  //   return {
-  //     statusDefault: this.currentStatus,
-  //     statusSelected: "",
-  //     statusColor: null,
-  //     selected: null
-  //   };
-  // },
   props: {
     status: Object
   },
@@ -50,4 +42,29 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+[type="radio"] {
+  position: absolute;
+  left: -9999px;
+}
+[type="radio"]:checked + label,
+[type="radio"]:not(:checked) + label {
+  position: relative;
+  padding-left: 28px;
+  cursor: pointer;
+  line-height: 20px;
+  display: inline-block;
+  color: #666;
+}
+[type="radio"]:checked + label:before,
+[type="radio"]:not(:checked) + label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ddd;
+  border-radius: 100%;
+  background: currentColor;
+}
 </style>
