@@ -16,7 +16,7 @@
         <li class="task-list--item">
           <p>Task 2 name Task 2 name</p>
           <StatusItem
-            currentStatus="Completed"
+            currentStatus="Canceled"
             :data="statusData"
             module="tasks"
           />
@@ -77,6 +77,7 @@ export default {
   },
   data() {
     return {
+      items: null,
       statusData: null,
       error: null
     };

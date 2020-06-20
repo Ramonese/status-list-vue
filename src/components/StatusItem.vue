@@ -6,21 +6,25 @@
       @click.stop="openStatusList"
       ref="statusLabel"
     >
-      {{ currentStatus }}
+      {{ statusName }}
     </button>
     <transition name="fade">
       <div v-if="showPicker">
         <form class="status-list" v-click-outside="onClickOutside">
           <fieldset>
             <legend class="sr-only">Change status</legend>
-            <Item
-              class="status-list--item"
+            <div
               v-for="status in data"
-              :status="status"
-              :moduleName="status.module"
               :key="status.status_id + status.status_name"
-              @updateLabel="updateLabel"
-            />
+            >
+              <template v-if="status.module == module">
+                <Item
+                  class="status-list--item"
+                  :status="status"
+                  @updateLabel="updateLabel"
+                />
+              </template>
+            </div>
           </fieldset>
         </form>
       </div>
@@ -41,11 +45,10 @@ export default {
   },
   data() {
     return {
-      statusDefault: this.currentStatus,
-      statusSelected: "",
+      statusName: this.currentStatus,
       statusColor: null,
       selected: null,
-      showPicker: true
+      showPicker: false
     };
   },
   directives: {
@@ -67,7 +70,7 @@ export default {
     // },
     updateLabel(label) {
       this.statusColor = label.color;
-      this.currentStatus = label.name;
+      this.statusName = label.name;
       this.showPicker = false;
     }
   }

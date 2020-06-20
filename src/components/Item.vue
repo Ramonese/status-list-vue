@@ -16,6 +16,7 @@
       @up="changeStatus"
       >{{ status.status_name }}</label
     >
+    {{ status.module }}
   </div>
 </template>
 
@@ -23,8 +24,7 @@
 export default {
   name: "Item",
   props: {
-    status: Object,
-    moduleName: String
+    status: Object
   },
   methods: {
     openStatusList() {
