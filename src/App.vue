@@ -95,6 +95,16 @@ export default {
 </script>
 
 <style>
+:root {
+  --white: #fff;
+  --text-color: #1f2226;
+  --text-active: #043159;
+  --label-background: #47c1bf;
+  --hover-color: #f7f9fd;
+  --focus-color: #ebf5fa;
+  --focus-border: transparent;
+  --border-radius: 4px;
+}
 @font-face {
   font-family: "Inter";
   font-style: normal;
@@ -112,18 +122,11 @@ export default {
 } */
 #app {
   font-family: Inter, Helvetica, Arial, sans-serif;
-  color: #2c3e50;
+  color: var(--text-color);
   font-size: 12px;
   line-height: 16px;
 }
-:root {
-  --white: #fff;
-  --blue: #47c1bf;
-  --label-background: #47c1bf;
-  --hover-color: #f7f9fd;
-  --focus-color: red;
-  --border-radius: 4px;
-}
+
 .task-list {
   list-style: none;
   display: grid;

@@ -16,7 +16,6 @@
       @up="changeStatus"
       >{{ status.status_name }}</label
     >
-    {{ status.module }}
   </div>
 </template>
 
@@ -74,9 +73,11 @@ export default {
   background: currentColor;
 }
 .status-color {
+  --focus-border: transparent;
   display: inline-block;
-  height: 10px;
-  width: 10px;
+  height: 12px;
+  width: 12px;
   border-radius: 50%;
+  border: 2px solid var(--focus-border);
 }
 </style>

@@ -85,6 +85,8 @@ ul {
 
 fieldset {
   border: none;
+  margin: 0;
+  padding: 0;
 }
 .c-status {
   position: relative;
@@ -96,7 +98,6 @@ fieldset {
 }
 .status-list {
   position: absolute;
-
   background: var(--white);
   border-radius: var(--border-radius);
   box-shadow: 0px 8px 32px rgba(31, 34, 38, 0.12),
@@ -104,36 +105,42 @@ fieldset {
   z-index: 1;
 }
 .status--button {
+  -webkit-appearance: button;
   position: relative;
   padding: 2px 8px;
-  -webkit-appearance: button;
-  border: 0;
-  border-radius: var(--border-radius);
   cursor: pointer;
   color: var(--white);
   background: var(--label-background);
+  border: 0;
+  border-radius: var(--border-radius);
 }
-
 .status-label {
   display: inline-block;
-  padding: 8px;
+  padding-left: 8px;
+  line-height: 1;
   white-space: nowrap;
 }
 .status-list--item {
-  padding: 0 16px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
 }
 .status-list--item:hover {
   background-color: var(--hover-color);
 }
 .status-list--item:active {
+  color: var(--text-active);
   background-color: var(--focus-color);
 }
-
+.status-list--item:active .status-color {
+  --focus-border: white;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>
