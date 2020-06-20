@@ -7,15 +7,35 @@
       <ul class="task-list">
         <li class="task-list--item">
           Task 1 name
-          <StatusItem currentStatus="Completed" :data="statusData" />
+          <StatusItem
+            :data="statusData"
+            currentStatus="Completed"
+            module="tasks"
+          />
         </li>
         <li class="task-list--item">
           <p>Task 2 name Task 2 name</p>
-          <StatusItem currentStatus="Completed" :data="statusData" />
+          <StatusItem
+            currentStatus="Completed"
+            :data="statusData"
+            module="tasks"
+          />
         </li>
         <li class="task-list--item">
-          <p>Project 3 name</p>
-          <StatusItem currentStatus="Completed" :data="statusData" />
+          <p>Project 1 name</p>
+          <StatusItem
+            currentStatus="Completed"
+            :data="statusData"
+            module="projects"
+          />
+        </li>
+        <li class="task-list--item">
+          <p>Project 2 name</p>
+          <StatusItem
+            currentStatus="Completed"
+            :data="statusData"
+            module="projects"
+          />
         </li>
       </ul>
     </section>
@@ -50,7 +70,6 @@ const params = {
     module: ["projects", "tasks"]
   }
 };
-
 export default {
   name: "App",
   components: {

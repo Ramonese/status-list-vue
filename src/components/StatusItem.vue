@@ -6,7 +6,7 @@
       @click.stop="openStatusList"
       ref="statusLabel"
     >
-      test{{ statusSelected }}
+      {{ currentStatus }}
     </button>
     <transition name="fade">
       <div v-if="showPicker">
@@ -17,8 +17,8 @@
               class="status-list--item"
               v-for="status in data"
               :status="status"
+              :moduleName="status.module"
               :key="status.status_id + status.status_name"
-              :style="{ background: status.color }"
               @updateLabel="updateLabel"
             />
           </fieldset>
@@ -34,6 +34,11 @@ import Item from "../components/Item.vue";
 export default {
   name: "StatusItem",
   components: { Item },
+  props: {
+    currentStatus: String,
+    data: Array,
+    module: String
+  },
   data() {
     return {
       statusDefault: this.currentStatus,
@@ -46,10 +51,7 @@ export default {
   directives: {
     clickOutside: vClickOutside.directive
   },
-  props: {
-    currentStatus: String,
-    data: Array
-  },
+
   methods: {
     openStatusList() {
       this.showPicker = true;
@@ -65,7 +67,7 @@ export default {
     // },
     updateLabel(label) {
       this.statusColor = label.color;
-      this.statusSelected = label.name;
+      this.currentStatus = label.name;
       this.showPicker = false;
     }
   }
@@ -91,7 +93,7 @@ fieldset {
 }
 .status-list {
   position: absolute;
-  padding: 16px;
+
   background: var(--white);
   border-radius: var(--border-radius);
   box-shadow: 0px 8px 32px rgba(31, 34, 38, 0.12),
@@ -113,6 +115,9 @@ fieldset {
   display: inline-block;
   padding: 8px;
   white-space: nowrap;
+}
+.status-list--item {
+  padding: 0 16px;
 }
 .status-list--item:hover {
   background-color: var(--hover-color);

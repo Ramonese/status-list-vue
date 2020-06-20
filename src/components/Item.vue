@@ -1,16 +1,21 @@
 <template>
   <div>
-    <input
+    <!-- <input
       type="radio"
       name="status"
       :value="status.status_name"
       :id="status.status_id + status.status_name"
       :style="{ color: status.color }"
       @change="changeStatus"
-    />
-    <label :for="status.status_id" class="status-label">{{
-      status.status_name
-    }}</label>
+    /> -->
+    <span class="status-color" :style="{ background: status.color }"></span>
+    <label
+      :for="status.status_id"
+      class="status-label"
+      @click="changeStatus"
+      @up="changeStatus"
+      >{{ status.status_name }}</label
+    >
   </div>
 </template>
 
@@ -18,7 +23,8 @@
 export default {
   name: "Item",
   props: {
-    status: Object
+    status: Object,
+    moduleName: String
   },
   methods: {
     openStatusList() {
@@ -28,9 +34,9 @@ export default {
       this.$refs.statusLabel.style.setProperty("--label-background", "red");
       console.log(this.status, this.$refs.statusLabel);
     },
-    changeStatus($event) {
+    changeStatus() {
       const label = {
-        name: $event.target.value,
+        name: this.status.status_name,
         color: this.status.color
       };
       console.log("click status", label);
@@ -66,5 +72,11 @@ export default {
   border: 1px solid #ddd;
   border-radius: 100%;
   background: currentColor;
+}
+.status-color {
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
 }
 </style>
