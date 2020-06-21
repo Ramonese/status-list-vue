@@ -17,14 +17,12 @@
               v-for="status in data"
               :key="status.status_id + status.status_name"
             >
-              <template v-if="status.module == module">
-                <Item
-                  class="status-list--item"
-                  :status="status"
-                  :activeStatus="statusName"
-                  @updateLabel="updateLabel"
-                />
-              </template>
+              <StatusName
+                class="status-list--item"
+                :status="status"
+                :activeStatusClass="statusName"
+                @updateLabel="updateLabel"
+              />
             </div>
           </fieldset>
         </form>
@@ -35,14 +33,13 @@
 
 <script>
 import vClickOutside from "v-click-outside";
-import Item from "../components/Item.vue";
+import StatusName from "../components/StatusName.vue";
 export default {
   name: "StatusItem",
-  components: { Item },
+  components: { StatusName },
   props: {
     currentStatus: Array,
     data: Array,
-    module: String,
     status: String
   },
   data() {
@@ -74,9 +71,6 @@ export default {
       this.statusColor = label.color;
       this.statusName = label.name;
       this.showPicker = false;
-    },
-    mounted() {
-      return (this.statusName = this.currentStatus[0].status_name);
     }
   }
 };
@@ -144,20 +138,19 @@ fieldset {
   background-color: var(--focus-color);
   border-left: 2px solid #0085e0;
 }
-.status-list--item:active .status-color {
+.status-list--item.active .status-color {
   --focus-border: white;
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.2s;
+  transition: all 0.3s ease-in;
   opacity: 1;
-  height: 100%;
-  transform: scale(1);
+  max-height: 300px;
 }
 .fade-enter,
 .fade-leave-to {
-  height: 0;
-
-  transform: scale(0);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
 }
 </style>

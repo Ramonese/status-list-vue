@@ -13,7 +13,6 @@
           <StatusItem
             :data="statusDataTasks"
             :currentStatus="defaultTaskStatus"
-            :module="item.type"
           />
         </li>
       </ul>
@@ -27,7 +26,6 @@
           <StatusItem
             :data="statusDataProjects"
             :currentStatus="defaultProjectStatus"
-            :module="item.type"
           />
         </li>
       </ul>
@@ -66,15 +64,9 @@ const params = {
     module: ["projects", "tasks"]
   }
 };
-//example test interface
-let tasks = [
-  { name: "Task 1", type: "tasks", status: "" },
-  { name: "Task 2", type: "tasks", status: "" }
-];
-let projects = [
-  { name: "Project 1", type: "projects", status: "" },
-  { name: "Project 2", type: "projects", status: "" }
-];
+//data example test interface
+const tasks = [{ name: "Task 1" }, { name: "Task 2" }];
+const projects = [{ name: "Project 1" }, { name: "Project 2" }];
 export default {
   name: "App",
   components: {

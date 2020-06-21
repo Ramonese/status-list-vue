@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ active: status.status_name === activeStatus }">
+  <div :class="{ active: status.status_name === activeStatusClass }">
     <!-- <input
       type="radio"
       name="status"
@@ -21,15 +21,12 @@
 
 <script>
 export default {
-  name: "Item",
+  name: "StatusName",
   props: {
     status: Object,
-    activeStatus: String
+    activeStatusClass: String
   },
   methods: {
-    openStatusList() {
-      alert("click");
-    },
     getStatus() {
       this.$refs.statusLabel.style.setProperty("--label-background", "red");
       console.log(this.status, this.$refs.statusLabel);
@@ -39,7 +36,6 @@ export default {
         name: this.status.status_name,
         color: this.status.color
       };
-      console.log("click status", label);
       this.$emit("updateLabel", label);
     }
   }
@@ -47,8 +43,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-[type="radio"] {
+<style>
+/* [type="radio"] {
   position: absolute;
   left: -9999px;
 }
@@ -72,7 +68,7 @@ export default {
   border: 1px solid #ddd;
   border-radius: 100%;
   background: currentColor;
-}
+} */
 .status-color {
   --focus-border: transparent;
   display: inline-block;
