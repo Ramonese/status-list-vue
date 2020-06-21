@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{ active: status.status_name === activeStatus }">
     <!-- <input
       type="radio"
       name="status"
@@ -23,7 +23,8 @@
 export default {
   name: "Item",
   props: {
-    status: Object
+    status: Object,
+    activeStatus: String
   },
   methods: {
     openStatusList() {

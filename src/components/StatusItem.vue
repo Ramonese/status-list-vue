@@ -21,6 +21,7 @@
                 <Item
                   class="status-list--item"
                   :status="status"
+                  :activeStatus="statusName"
                   @updateLabel="updateLabel"
                 />
               </template>
@@ -39,14 +40,15 @@ export default {
   name: "StatusItem",
   components: { Item },
   props: {
-    currentStatus: String,
+    currentStatus: Array,
     data: Array,
-    module: String
+    module: String,
+    status: String
   },
   data() {
     return {
-      statusName: this.currentStatus,
-      statusColor: null,
+      statusName: this.currentStatus[0].status_name,
+      statusColor: this.currentStatus[0].color,
       selected: null,
       showPicker: false
     };
@@ -72,6 +74,9 @@ export default {
       this.statusColor = label.color;
       this.statusName = label.name;
       this.showPicker = false;
+    },
+    mounted() {
+      return (this.statusName = this.currentStatus[0].status_name);
     }
   }
 };
@@ -107,6 +112,9 @@ fieldset {
 }
 .status--button {
   -webkit-appearance: button;
+  font-family: inherit;
+  font-weight: normal;
+  font-size: inherit;
   position: relative;
   padding: 2px 8px;
   cursor: pointer;
@@ -131,9 +139,10 @@ fieldset {
 .status-list--item:hover {
   background-color: var(--hover-color);
 }
-.status-list--item:active {
+.status-list--item.active {
   color: var(--text-active);
   background-color: var(--focus-color);
+  border-left: 2px solid #0085e0;
 }
 .status-list--item:active .status-color {
   --focus-border: white;

@@ -3,13 +3,27 @@
     <aside v-if="error" class="notification">
       <p>{{ error }}</p>
     </aside>
-    <section>
+    <section v-if="statusData">
       <ul class="task-list">
-        <li class="task-list--item" v-for="item in items" :key="item.name">
+        <li class="task-list--item" v-for="item in taskItems" :key="item.name">
           {{ item.name }}
           <StatusItem
             :data="statusData"
-            currentStatus="Completed"
+            :currentStatus="defaultTaskStatus"
+            :module="item.type"
+          />
+        </li>
+      </ul>
+      <ul class="task-list">
+        <li
+          class="task-list--item"
+          v-for="item in projectItems"
+          :key="item.name"
+        >
+          {{ item.name }}
+          <StatusItem
+            :data="statusData"
+            :currentStatus="defaultProjectStatus"
             :module="item.type"
           />
         </li>
@@ -28,6 +42,7 @@
         status.status_name
       }}</label>
     </div> -->
+    <p>status {{ defaultTaskStatus }}, {{ defaultProjectStatus }}</p>
     {{ statusData }}
   </div>
 </template>
@@ -47,9 +62,12 @@ const params = {
   }
 };
 let tasks = [
-  { name: "Task 1", type: "tasks" },
-  { name: "Task 2", type: "tasks" },
-  { name: "Project 1", type: "projects" }
+  { name: "Task 1", type: "tasks", status: "" },
+  { name: "Task 2", type: "tasks", status: "" }
+];
+let projects = [
+  { name: "Project 1", type: "projects", status: "" },
+  { name: "Project 2", type: "projects", status: "" }
 ];
 export default {
   name: "App",
@@ -58,7 +76,10 @@ export default {
   },
   data() {
     return {
-      items: tasks,
+      taskItems: tasks,
+      projectItems: projects,
+      defaultTaskStatus: null,
+      defaultProjectStatus: null,
       statusData: null,
       error: null
     };
@@ -66,11 +87,23 @@ export default {
   created() {
     axios
       .post(CORS_PROXY + apiUrl, params)
-      .then(response => (this.statusData = response.data.data))
+      .then(response => {
+        this.statusData = response.data.data;
+        this.defaultTaskStatus = response.data.data.filter(
+          item => item.module == "tasks" && item.is_default == 1
+        );
+
+        this.defaultProjectStatus = response.data.data.filter(
+          item => item.module == "projects" && item.is_default == 1
+        );
+      })
       .catch(error => {
         this.error = "Please, try again " + error;
       });
-  }
+
+    //return itemStatus;
+  },
+  mounted() {}
 };
 </script>
 
@@ -105,6 +138,8 @@ export default {
   color: var(--text-color);
   font-size: 12px;
   line-height: 16px;
+  max-width: 100em;
+  margin: 5em auto;
 }
 
 .task-list {
