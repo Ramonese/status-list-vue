@@ -1,51 +1,42 @@
 <template>
   <div id="app">
+    <h1>Projects and tasks</h1>
     <aside v-if="error" class="notification">
       <p>{{ error }}</p>
     </aside>
     <p v-if="isLoading">
       {{ loadingMessage }}
     </p>
-    <section v-else>
-      <ul class="task-list">
-        <li class="task-list--item" v-for="item in taskItems" :key="item.name">
-          {{ item.name }}
-          <StatusItem
-            :data="statusDataTasks"
-            :currentStatus="defaultTaskStatus"
-          />
-        </li>
-      </ul>
-      <ul class="task-list">
-        <li
-          class="task-list--item"
-          v-for="item in projectItems"
-          :key="item.name"
-        >
-          {{ item.name }}
-          <StatusItem
-            :data="statusDataProjects"
-            :currentStatus="defaultProjectStatus"
-          />
-        </li>
-      </ul>
-    </section>
-    <!-- <div v-for="status in statusData" :key="status.status_id">
-      <input
-        type="radio"
-        name="status"
-        :value="status.status_name"
-        :id="status.status_id"
-        :color="status.color"
-        @change="changeStatus"
-      />
-      <label :for="status.status_id" class="status-label">{{
-        status.status_name
-      }}</label>
-    </div> -->
-    <p>status {{ defaultTaskStatus }}, {{ defaultProjectStatus }}</p>
-    {{ statusDataTasks }}<br />
-    {{ statusDataProjects }}
+    <transition name="fade">
+      <section v-if="!isLoading">
+        <ul class="task-list">
+          <li
+            class="task-list--item"
+            v-for="item in taskItems"
+            :key="item.name"
+          >
+            {{ item.name }}
+            <StatusItem
+              :data="statusDataTasks"
+              :currentStatus="defaultTaskStatus"
+            />
+          </li>
+        </ul>
+        <ul class="task-list">
+          <li
+            class="task-list--item"
+            v-for="item in projectItems"
+            :key="item.name"
+          >
+            {{ item.name }}
+            <StatusItem
+              :data="statusDataProjects"
+              :currentStatus="defaultProjectStatus"
+            />
+          </li>
+        </ul>
+      </section>
+    </transition>
   </div>
 </template>
 
@@ -101,8 +92,6 @@ export default {
         this.defaultProjectStatus = this.statusDataProjects.filter(
           item => item.is_default == 1
         );
-        console.log(this.statusDataTasks.length);
-        console.log(this.statusDataProjects.length);
         if (this.statusDataTasks && this.statusDataProjects) {
           this.isLoading = false;
         }
@@ -132,14 +121,6 @@ export default {
   font-display: swap;
   src: url("./assets/font/Inter-Medium.woff") format("woff");
 }
-/* @font-face {
-  font-family: "Inter";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("Inter-SemiBold.woff2?v=3.12") format("woff2"),
-    url("Inter-SemiBold.woff?v=3.12") format("woff");
-} */
 #app {
   font-family: Inter, Helvetica, Arial, sans-serif;
   color: var(--text-color);
@@ -147,19 +128,34 @@ export default {
   line-height: 16px;
   max-width: 100em;
   margin: 5em auto;
+  padding: 3em;
 }
-
+/*Example interface style, not realted to test*/
+h1 {
+  font-weight: normal;
+  margin-bottom: 2em;
+}
 .task-list {
   list-style: none;
   display: grid;
   width: max-content;
   grid-template-columns: 1fr;
   grid-gap: 2em;
+  margin-bottom: 3em;
 }
 .task-list--item {
   display: grid;
   grid-template-columns: max-content 1fr;
   grid-gap: 3em 10px;
   align-items: center;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease-in;
+  opacity: 1;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

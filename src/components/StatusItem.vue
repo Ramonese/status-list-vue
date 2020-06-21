@@ -8,26 +8,24 @@
     >
       {{ statusName }}
     </button>
-    <transition name="fade">
-      <div v-show="showPicker">
-        <form class="status-list" v-click-outside="onClickOutside">
-          <fieldset>
-            <legend class="sr-only">Change status</legend>
-            <div
-              v-for="status in data"
-              :key="status.status_id + status.status_name"
-            >
-              <StatusName
-                class="status-list--item"
-                :status="status"
-                :activeStatusClass="statusName"
-                @updateLabel="updateLabel"
-              />
-            </div>
-          </fieldset>
-        </form>
-      </div>
-    </transition>
+    <div v-show="showPicker">
+      <form class="status-list" v-click-outside="onClickOutside">
+        <fieldset>
+          <legend class="sr-only">Change status</legend>
+          <div
+            v-for="status in data"
+            :key="status.status_id + status.status_name"
+          >
+            <StatusName
+              class="status-list--item"
+              :status="status"
+              :activeStatusClass="statusName"
+              @updateLabel="updateLabel"
+            />
+          </div>
+        </fieldset>
+      </form>
+    </div>
   </aside>
 </template>
 
@@ -140,17 +138,5 @@ fieldset {
 }
 .status-list--item.active .status-color {
   --focus-border: white;
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: all 0.3s ease-in;
-  opacity: 1;
-  max-height: 300px;
-}
-.fade-enter,
-.fade-leave-to {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
 }
 </style>

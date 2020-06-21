@@ -12,8 +12,8 @@
     <label
       :for="status.status_id"
       class="status-label"
-      @click="changeStatus"
       @up="changeStatus"
+      @click="changeStatus"
       >{{ status.status_name }}</label
     >
   </div>
