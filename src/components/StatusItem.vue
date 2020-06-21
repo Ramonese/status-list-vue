@@ -4,7 +4,6 @@
       class="status--button"
       :style="{ background: statusColor }"
       @click.stop="openStatusList"
-      ref="statusLabel"
     >
       {{ statusName }}
     </button>
@@ -71,7 +70,6 @@ ul {
   list-style-type: none;
   padding: 0;
 }
-
 fieldset {
   border: none;
   margin: 0;
@@ -107,6 +105,7 @@ fieldset {
   color: var(--text-active);
   background-color: var(--focus-color);
   border-left: 2px solid var(--accent);
+  font-weight: 600;
 }
 .status-list--item.active .status-color {
   --focus-border: var(--white);
@@ -124,11 +123,7 @@ fieldset {
   border: 0;
   border-radius: var(--border-radius);
 }
-.status-label {
-  cursor: inherit;
-  display: inline-block;
-  padding-left: 8px;
-  line-height: 1;
-  white-space: nowrap;
+.status--button:focus {
+  outline-color: lightgrey;
 }
 </style>

@@ -46,7 +46,7 @@ import StatusItem from "./components/StatusItem.vue";
 //Cors server for development version of the app
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 const apiUrl = "https://homeassignment.scoro.com/api/v2/statuses/list";
-//Api request parameters to get task, project status
+//Api request parameters to get task, project statuses
 const params = {
   company_account_id: "apiplayground",
   apiKey: "ScoroAPI_8cacfb14f41d342",
@@ -55,7 +55,7 @@ const params = {
     module: ["projects", "tasks"]
   }
 };
-//data example test interface
+//data for example interface
 const tasks = [{ name: "Task 1" }, { name: "Task 2" }];
 const projects = [{ name: "Project 1" }, { name: "Project 2" }];
 export default {
@@ -85,7 +85,7 @@ export default {
         this.statusDataProjects = data.filter(
           item => item.module == "projects"
         );
-        //Example test interface to set default status for task, project
+        //Example interface to set default status for task, project
         this.defaultTaskStatus = this.statusDataTasks.filter(
           item => item.is_default == 1
         );
@@ -125,12 +125,12 @@ export default {
   font-family: Inter, Helvetica, Arial, sans-serif;
   color: var(--text-color);
   font-size: 12px;
-  line-height: 16px;
+  line-height: 1.5;
   max-width: 100em;
   margin: 5em auto;
   padding: 3em;
 }
-/*Example interface style, not realted to test*/
+/*Example interface style, not related to test*/
 h1 {
   font-weight: normal;
   margin-bottom: 2em;
