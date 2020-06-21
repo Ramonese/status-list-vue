@@ -5,36 +5,12 @@
     </aside>
     <section>
       <ul class="task-list">
-        <li class="task-list--item">
-          Task 1 name
+        <li class="task-list--item" v-for="item in items" :key="item.name">
+          {{ item.name }}
           <StatusItem
             :data="statusData"
             currentStatus="Completed"
-            module="tasks"
-          />
-        </li>
-        <li class="task-list--item">
-          <p>Task 2 name Task 2 name</p>
-          <StatusItem
-            currentStatus="Canceled"
-            :data="statusData"
-            module="tasks"
-          />
-        </li>
-        <li class="task-list--item">
-          <p>Project 1 name</p>
-          <StatusItem
-            currentStatus="Completed"
-            :data="statusData"
-            module="projects"
-          />
-        </li>
-        <li class="task-list--item">
-          <p>Project 2 name</p>
-          <StatusItem
-            currentStatus="Completed"
-            :data="statusData"
-            module="projects"
+            :module="item.type"
           />
         </li>
       </ul>
@@ -70,6 +46,11 @@ const params = {
     module: ["projects", "tasks"]
   }
 };
+let tasks = [
+  { name: "Task 1", type: "tasks" },
+  { name: "Task 2", type: "tasks" },
+  { name: "Project 1", type: "projects" }
+];
 export default {
   name: "App",
   components: {
@@ -77,7 +58,7 @@ export default {
   },
   data() {
     return {
-      items: null,
+      items: tasks,
       statusData: null,
       error: null
     };
@@ -88,7 +69,6 @@ export default {
       .then(response => (this.statusData = response.data.data))
       .catch(error => {
         this.error = "Please, try again " + error;
-        console.log(error);
       });
   }
 };
@@ -132,6 +112,7 @@ export default {
   display: grid;
   width: max-content;
   grid-template-columns: 1fr;
+  grid-gap: 2em;
 }
 .task-list--item {
   display: grid;

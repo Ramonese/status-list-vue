@@ -9,7 +9,7 @@
       {{ statusName }}
     </button>
     <transition name="fade">
-      <div v-if="showPicker">
+      <div v-show="showPicker">
         <form class="status-list" v-click-outside="onClickOutside">
           <fieldset>
             <legend class="sr-only">Change status</legend>
@@ -102,7 +102,8 @@ fieldset {
   border-radius: var(--border-radius);
   box-shadow: 0px 8px 32px rgba(31, 34, 38, 0.12),
     0px 2px 6px rgba(31, 34, 38, 0.08);
-  z-index: 1;
+  z-index: 10;
+  transform: translateZ(0);
 }
 .status--button {
   -webkit-appearance: button;
@@ -115,6 +116,7 @@ fieldset {
   border-radius: var(--border-radius);
 }
 .status-label {
+  cursor: inherit;
   display: inline-block;
   padding-left: 8px;
   line-height: 1;
@@ -124,6 +126,7 @@ fieldset {
   padding: 10px 16px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .status-list--item:hover {
   background-color: var(--hover-color);
@@ -137,10 +140,15 @@ fieldset {
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s;
+  transition: all 0.2s;
+  opacity: 1;
+  height: 100%;
+  transform: scale(1);
 }
 .fade-enter,
 .fade-leave-to {
-  opacity: 0;
+  height: 0;
+
+  transform: scale(0);
 }
 </style>
