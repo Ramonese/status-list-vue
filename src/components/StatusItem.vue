@@ -37,8 +37,7 @@ export default {
   components: { StatusName },
   props: {
     currentStatus: Array,
-    data: Array,
-    status: String
+    data: Array
   },
   data() {
     return {
@@ -51,20 +50,13 @@ export default {
   directives: {
     clickOutside: vClickOutside.directive
   },
-
   methods: {
     openStatusList() {
       this.showPicker = true;
     },
-    onClickOutside(event) {
-      console.log("Clicked outside. Event: ", event);
-      console.log("Element clicked on:", event.target);
+    onClickOutside() {
       this.showPicker = false;
     },
-    // getStatus() {
-    //   this.$refs.statusLabel.style.setProperty("--label-background", "red");
-    //   console.log(this.status, this.$refs.statusLabel);
-    // },
     updateLabel(label) {
       this.statusColor = label.color;
       this.statusName = label.name;
@@ -99,8 +91,25 @@ fieldset {
   border-radius: var(--border-radius);
   box-shadow: 0px 8px 32px rgba(31, 34, 38, 0.12),
     0px 2px 6px rgba(31, 34, 38, 0.08);
-  z-index: 10;
-  transform: translateZ(0);
+  z-index: 1;
+  padding: 8px 0;
+}
+.status-list--item {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.status-list--item:hover {
+  background-color: var(--hover-color);
+}
+.status-list--item.active {
+  color: var(--text-active);
+  background-color: var(--focus-color);
+  border-left: 2px solid var(--accent);
+}
+.status-list--item.active .status-color {
+  --focus-border: var(--white);
 }
 .status--button {
   -webkit-appearance: button;
@@ -121,22 +130,5 @@ fieldset {
   padding-left: 8px;
   line-height: 1;
   white-space: nowrap;
-}
-.status-list--item {
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-.status-list--item:hover {
-  background-color: var(--hover-color);
-}
-.status-list--item.active {
-  color: var(--text-active);
-  background-color: var(--focus-color);
-  border-left: 2px solid #0085e0;
-}
-.status-list--item.active .status-color {
-  --focus-border: white;
 }
 </style>

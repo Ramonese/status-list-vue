@@ -108,7 +108,7 @@ export default {
   --white: #fff;
   --text-color: #1f2226;
   --text-active: #043159;
-  --label-background: #47c1bf;
+  --accent: #0085e0;
   --hover-color: #f7f9fd;
   --focus-color: #ebf5fa;
   --focus-border: transparent;
@@ -157,5 +157,15 @@ h1 {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+/* screen reader only*/
+.sr-only {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
 }
 </style>
