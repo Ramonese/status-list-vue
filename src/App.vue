@@ -3,12 +3,15 @@
     <aside v-if="error" class="notification">
       <p>{{ error }}</p>
     </aside>
-    <section v-if="statusData">
+    <p v-if="isLoading">
+      {{ loadingMessage }}
+    </p>
+    <section v-else>
       <ul class="task-list">
         <li class="task-list--item" v-for="item in taskItems" :key="item.name">
           {{ item.name }}
           <StatusItem
-            :data="statusData"
+            :data="statusDataTasks"
             :currentStatus="defaultTaskStatus"
             :module="item.type"
           />
@@ -22,7 +25,7 @@
         >
           {{ item.name }}
           <StatusItem
-            :data="statusData"
+            :data="statusDataProjects"
             :currentStatus="defaultProjectStatus"
             :module="item.type"
           />
@@ -43,7 +46,8 @@
       }}</label>
     </div> -->
     <p>status {{ defaultTaskStatus }}, {{ defaultProjectStatus }}</p>
-    {{ statusData }}
+    {{ statusDataTasks }}<br />
+    {{ statusDataProjects }}
   </div>
 </template>
 
@@ -53,6 +57,7 @@ import StatusItem from "./components/StatusItem.vue";
 //Cors server for development version of the app
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 const apiUrl = "https://homeassignment.scoro.com/api/v2/statuses/list";
+//Api request parameters to get task, project status
 const params = {
   company_account_id: "apiplayground",
   apiKey: "ScoroAPI_8cacfb14f41d342",
@@ -61,6 +66,7 @@ const params = {
     module: ["projects", "tasks"]
   }
 };
+//example test interface
 let tasks = [
   { name: "Task 1", type: "tasks", status: "" },
   { name: "Task 2", type: "tasks", status: "" }
@@ -78,32 +84,41 @@ export default {
     return {
       taskItems: tasks,
       projectItems: projects,
+      statusDataTasks: null,
+      statusDataProjects: null,
       defaultTaskStatus: null,
       defaultProjectStatus: null,
-      statusData: null,
-      error: null
+      error: null,
+      isLoading: true,
+      loadingMessage: "Fetching your data"
     };
   },
   created() {
     axios
       .post(CORS_PROXY + apiUrl, params)
       .then(response => {
-        this.statusData = response.data.data;
-        this.defaultTaskStatus = response.data.data.filter(
-          item => item.module == "tasks" && item.is_default == 1
+        const data = response.data.data;
+        this.statusDataTasks = data.filter(item => item.module == "tasks");
+        this.statusDataProjects = data.filter(
+          item => item.module == "projects"
         );
-
-        this.defaultProjectStatus = response.data.data.filter(
-          item => item.module == "projects" && item.is_default == 1
+        //Example test interface to set default status for task, project
+        this.defaultTaskStatus = this.statusDataTasks.filter(
+          item => item.is_default == 1
         );
+        this.defaultProjectStatus = this.statusDataProjects.filter(
+          item => item.is_default == 1
+        );
+        console.log(this.statusDataTasks.length);
+        console.log(this.statusDataProjects.length);
+        if (this.statusDataTasks && this.statusDataProjects) {
+          this.isLoading = false;
+        }
       })
       .catch(error => {
         this.error = "Please, try again " + error;
       });
-
-    //return itemStatus;
-  },
-  mounted() {}
+  }
 };
 </script>
 
